@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- include es5-shim and es5-shim when support for older browsers is needed -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.5/es5-shim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.23.0/es6-shim.min.js"></script>
+  <!-- add jQuery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+  <!-- audio  -->
+  <script src="/js/monkeypatch.js"></script>
+  <script src="/js/metronome.js"></script>
+  <!-- time synching mechanism -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/timesync/timesync.js"></script>
+  <script src="/js/client.js"></script>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="screen">
+    <!-- Sync button -->
+    <div id="sync">
+      <img id="sync-button" src="/images/sync.png" onclick="sync();" type="button"/>
+    </div>
+    <!-- Active client count -->
+    <div id="clients">
+      <span id="online-icon"></span>
+      <span id="client-count">1</span> PLAYERS ONLINE (x1 winning)
+    </div>
+    <!-- Display BPM -->
+    <p> dont say lazy mong </p>
+    <div id="display-box">
+      <p id="tempo-display">120</p>
+    </div>
+    <!-- Blink on beat -->
+    <div id="blinkers" onclick="toggleResolution();">
+      <div id="blink-1" class="blink"></div>
+      <div id="blink-2" class="blink"></div>
+      <div id="blink-3" class="blink"></div>
+      <div id="blink-4" class="blink"></div>
+    </div>
+    <!-- Tempo -->
+    <div id="tempo-box">
+      <input id="tempo-scroll" type="range" min="35.0" max="270.0" step="1" value="120" oninput="$('#tempo-display').html(event.target.value); toggleTempoButton();">
+      <br/>
+      <button class="inactive" id="tempo-button" type="button" onclick="sendTempo();">Update BPM</button>
+    </div>
+    <!-- Media buttons -->
+    <div id="media-buttons">
+      <img id="tempo-change-button" src="/images/minus.png" onclick="tempoChange(-1)" type="button"/>
+      <img id="play-button" src="/images/play.png" onclick="emitPlay();" type="button"/>
+      <img id="tempo-change-button" src="/images/plus.png" onclick="tempoChange(1)" type="button"/>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function(){$('#screen').height($(window).height())})
+  </script>
+</body>
+</html>
